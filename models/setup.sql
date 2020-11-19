@@ -1,0 +1,6 @@
+CREATE TABLE posts (
+id INTEGER PRIMARY KEY,
+title TEXT NOT NULL,
+body TEXT NOT NULL,
+created_on DATE NOT NULL
+);
