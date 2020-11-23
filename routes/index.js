@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var posts_model = require('../models/posts')
 
 // GET Homepage
 router.get('/', (req, res) => {
@@ -7,24 +8,29 @@ router.get('/', (req, res) => {
 });
 
 // GET Posts
-router.get('/posts', (req, res) => {
+router.get('/posts', async (req, res) => {
+  let posts = await posts_model.get_all_posts()
+  if(posts) {
+    res.render('posts', {
+      title: "Blog Posts",
+      posts: posts
+    })
+  } else {
+    res.render('404')
+  }
 
-  res.render('posts', {
-    title: "My posts",
-    posts: [
-      {id: 1, title: "One", body: "This is a post. It's actually the first post. Isn't it cool to be first?"},
-      {id: 2, title: "Second", body: "For sooth say I, no longer shall yeh suffer under his boot."},
-      {id: 3, title: "Third", body: "This is once again a few words for the sake of adding content."},
-    ]})
 })
 
 // GET Single Post
-router.get('/post/:id', (req, res) => {
-  res.render('post', {
-    id: req.params.id,
-    title: "Test post",
-    body: "This post should be an actual post, but we're having database issues. Check ID to confirm it's all good."
-  })
+router.get('/post/:id', async (req, res) => {
+  let id = req.params.id
+  let result = await posts_model.get_post_by_id(id)
+
+  if(result) {
+    res.render('post', result)
+  } else {
+    res.render('404')
+  }
 })
 
 // GET Post Submission Form

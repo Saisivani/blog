@@ -33,5 +33,25 @@ router.post('/post', async (req, res) => {
     }
 })
 
+// GET post by id
+router.get('/post/:id', async (req, res) => {
+    let id = req.params.id
+    let result = await posts_model.get_post_by_id(id)
+    if(result) {
+        res.send(result)
+    } else {
+        res.send({msg: "Something went wrong."})
+    }
+})
+
+// Get all posts
+router.get('/posts', async (req, res) => {
+    let results = await posts_model.get_all_posts()
+    if(results) {
+        res.send(results)
+    } else {
+        res.send({msg: "Something went wrong."})
+    }
+})
 
 module.exports = router;
