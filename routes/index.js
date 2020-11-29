@@ -3,12 +3,7 @@ var router = express.Router();
 var posts_model = require('../models/posts')
 
 // GET Homepage
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
-});
-
-// GET Posts
-router.get('/posts', async (req, res) => {
+router.get('/', async(req, res) => {
   let posts = await posts_model.get_all_posts()
   if(posts) {
     res.render('posts', {
@@ -18,7 +13,11 @@ router.get('/posts', async (req, res) => {
   } else {
     res.render('404')
   }
+});
 
+// GET Posts
+router.get('/posts', async (req, res) => {
+  res.redirect('/')
 })
 
 // GET Single Post
