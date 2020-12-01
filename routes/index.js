@@ -43,7 +43,7 @@ router.post('/post', async (req, res) => {
   let body = req.body.body
   let added = await posts_model.add_post(title, body)
 
-  if(!added) {
+  if(added) {
     res.redirect(`/post/${added.lastInsertRowid}`)
   } else {
     res.render('new-post', {title: "Submit Post", msg: "ERROR: Please refill form."})

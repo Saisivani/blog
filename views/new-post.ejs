@@ -6,7 +6,7 @@
 <%}%>
 <form action="/post" METHOD="post">
     <input type="text" id="title" placeholder="title" name="title" required><br>
-    <textarea id="body" placeholder="Enter your blogpost here." name="body"></textarea><br>
+    <textarea id="body" placeholder="Enter your blogpost here." name="body" required></textarea><br>
     <input type="submit" value="Submit Post">
 </form>
 <%- include('./parts/tail') %>
