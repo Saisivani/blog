@@ -34,13 +34,20 @@ router.get('/post/:id', async (req, res) => {
 
 // GET Post Submission Form
 router.get('/post', (req, res) => {
-  res.render('new-post', {title: "Submit Post"})
+  res.render('new-post', {title: "Submit Post", msg: ""})
 })
 
 // POST New Post
-router.post('/post', (req, res) => {
-  console.log(req.body)
-  res.send({content: "All good!"})
+router.post('/post', async (req, res) => {
+  let title = req.body.title
+  let body = req.body.body
+  let added = await posts_model.add_post(title, body)
+
+  if(!added) {
+    res.redirect(`/post/${added.lastInsertRowid}`)
+  } else {
+    res.render('new-post', {title: "Submit Post", msg: "ERROR: Please refill form."})
+  }
 })
 
 
